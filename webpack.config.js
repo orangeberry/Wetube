@@ -7,10 +7,18 @@ const ENTRY_FILE = path.resolve(__dirname, "views", "assets", "js", "main.js");
 const OUTPUT_DIR = path.join(__dirname, "static");
 
 const config = {
-    entry: ENTRY_FILE,
+    entry: ["@babel/polyfill", ENTRY_FILE],
     mode: MODE,
     module: {
         rules: [
+            {
+                test: /\.(js)$/,
+                use: [
+                    {
+                        loader: "babel-loader"
+                    }
+                ]
+            },
             {
                 test: /\.scss$/,
                 use: [
@@ -24,12 +32,14 @@ const config = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            plugins() {
-                                return [
-                                    autoprefixer({
-                                        overrideBrowserslist: "cover 99.5%",
-                                    }),
-                                ];
+                            postcssOptions: {
+                                plugins() {
+                                    return [
+                                        autoprefixer({
+                                            overrideBrowserslist: "cover 99.5%",
+                                        }),
+                                    ];
+                                },
                             },
                         },
                     },
