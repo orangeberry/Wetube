@@ -10,6 +10,8 @@ block content
             h5.video__title=video.title
             p.video__description=video.description
             if video.views === 1
+                span.video__views 1 view
+            else
                 span.video__views #{video.views} views
                 
         .video__comments
