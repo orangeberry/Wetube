@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 import routes from "../routes";
 import { home, search } from "../controllers/videoController";
-import { getJoin, getLogin, githubLogin, logout, getMe, postGithubLogIn, postJoin, postLogin } from "../controllers/userController";
+import { getJoin, getLogin, githubLogin, logout, getMe, postGithubLogIn, postJoin, postLogin, facebookLogin, postFacebookLogin } from "../controllers/userController";
 import { onlyPrivate, onlyPublic } from "../middlewares";
 
 const globalRouter = express.Router();
@@ -24,6 +24,11 @@ globalRouter.get(routes.githubCallback, passport.authenticate("github", { failur
 );
 
 globalRouter.get(routes.me, getMe);
+
+globalRouter.get(routes.facebook, facebookLogin);
+globalRouter.get(routes.facebookCallback, passport.authenticate("facebook", { failureRedirect: "/login" }),
+    postFacebookLogin
+);
 
 export default globalRouter;
 

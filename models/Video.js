@@ -6,24 +6,28 @@ const VideoSchema = new mongoose.Schema({
         required: "File URL is required"
     },
     title: {
-        type:String,
+        type: String,
         required: "Title is required"
     },
-    description:String,
+    description: String,
     views: {
         type: Number,
         default: 0
     },
     createdAt: {
-        type:Date,
+        type: Date,
         default: Date.now
     },
     comments: [
         {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ],
+    creator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment"
+        ref: "User"
     }
-]
 });
 
 const model = mongoose.model("Video", VideoSchema);
